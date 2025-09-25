@@ -20,3 +20,15 @@ export const getUserFromToken = async (token: string): Promise<TokenPayload | nu
     return null;
   }
 };
+
+// ✅ নতুন ফাংশন যোগ করা হলো
+export const verifyToken = (token: string): TokenPayload => {
+  if (!token) throw new Error('No token provided');
+
+  try {
+    const decoded = jwt.verify(token, SECRET) as TokenPayload;
+    return decoded;
+  } catch (err) {
+    throw new Error('Invalid token');
+  }
+};

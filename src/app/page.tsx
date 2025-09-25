@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import Image from 'next/image';
 
 type Product = {
   _id: string;
@@ -53,11 +54,13 @@ export default function ShopPage() {
           interval={3000}
         >
           {[1, 2, 3].map((num) => (
-            <div key={num} className="w-full h-[80vh]">
-              <img
+            <div key={num} className="w-full h-[80vh] relative">
+              <Image
                 src={`/slider${num}.jpg`}
                 alt={`Slide ${num}`}
-                className="w-full h-full object-cover object-center"
+                fill
+                priority
+                className="object-cover object-center"
               />
             </div>
           ))}
@@ -96,11 +99,14 @@ export default function ShopPage() {
                   key={product._id}
                   className="border rounded-xl shadow-sm hover:shadow-lg bg-white overflow-hidden transition-all"
                 >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-52 w-full object-contain p-4 bg-gray-50"
-                  />
+                  <div className="relative h-52 w-full bg-gray-50 p-4">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
                   <div className="p-4">
                     <h2 className="text-base font-medium text-center line-clamp-2 mb-1">
                       {product.name}
